@@ -30,7 +30,7 @@
 #' data("selection_results")
 #' data("copynumber")
 #'
-#' output_location = tempdir()
+#' output_location <-  tempdir()
 #' step_one <- computeFvFm_PSII(CF_demodata,
 #' plate_names = names(CF_demodata),
 #' layout,
@@ -55,6 +55,9 @@
 #' @importFrom ggplot2 stat_summary
 #' @importFrom patchwork wrap_plots
 #' @importFrom ggplot2 aes
+#' @importFrom dplyr row_number
+#' @importFrom dplyr case_when
+#' @importFrom ggplot2 mean_se
 computeFvFm_PSII <- function(data,
                                 plate_names,
                                 layout,
@@ -87,9 +90,9 @@ computeFvFm_PSII <- function(data,
     plant_colours <- plate_fvfm %>%
       dplyr::distinct(Plant_ID, colour) %>%
       dplyr::group_by(colour) %>%
-      dplyr::mutate(col_index = row_number()) %>%
+      dplyr::mutate(col_index = dplyr::row_number()) %>%
       dplyr::ungroup() %>%
-      dplyr::mutate(color_value = case_when(
+      dplyr::mutate(color_value = dplyr::case_when(
         colour == "green" ~ custom_greens[col_index],
         colour == "red" ~ custom_reds[col_index]
       )) %>%

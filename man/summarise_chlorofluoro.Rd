@@ -4,7 +4,7 @@
 \alias{summarise_chlorofluoro}
 \title{Summarise the FvFm and PSII values for each plant line.}
 \usage{
-summarise_chlorofluoro(data, output_location, width = 18, height = 25)
+summarise_chlorofluoro(data, output_location, width = 25, height = 25)
 }
 \arguments{
 \item{data}{data.frame or list of data.frame; data output from
@@ -29,7 +29,9 @@ As before, the colour is determined by the BASTA selection result.
 }
 \examples{
 data("step_one")
+data("selection_results")
 output_location <- tempdir()
-step_three <- chlorofluor_summary(step_one, output_location)
+output_location <- "/Users/kejc/"
+step_three <- summarise_chlorofluoro(step_one, output_location)
 
 }

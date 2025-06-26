@@ -80,18 +80,18 @@ custom_reds   <- c("#8B0000",
     dplyr::select(`Construct_ID`, Plant_ID, Replicate, wells,
            QY_max, `Fv/Fm_L1`, `Fv/Fm_L2`, `Fv/Fm_L3`, `Fv/Fm_L4`, `QY_L1`, `QY_L2`, `QY_L3`, `QY_L4`)%>%
     dplyr::left_join(smartsheet, by = "Plant_ID")%>%
-    dplyr::mutate(colour = if_else(`BASTA result` == "Positive", "green", "red"))
+    dplyr::mutate(colour = dplyr::if_else(`BASTA result` == "Positive", "green", "red"))
 
   # Reshape Fv/Fm
   fvfm_long <- data_anno %>%
-    dplyr::select(Plant_ID, Replicate, starts_with("Fv/Fm_L"), colour) %>%
-    tidyr::pivot_longer(cols = starts_with("Fv/Fm_L"), names_to = "Timepoint", values_to = "FvFm") %>%
+    dplyr::select(Plant_ID, Replicate, dplyr::starts_with("Fv/Fm_L"), colour) %>%
+    tidyr::pivot_longer(cols = dplyr::starts_with("Fv/Fm_L"), names_to = "Timepoint", values_to = "FvFm") %>%
     dplyr::mutate(Time = as.numeric(gsub("Fv/Fm_L", "", Timepoint)) * 10)
 
   # Reshape ΦPSII (QY)
   phipsii_long <- data_anno %>%
-    dplyr::select(Plant_ID, Replicate, starts_with("QY_L"), colour) %>%
-    tidyr::pivot_longer(cols = starts_with("QY_L"), names_to = "Timepoint", values_to = "PhiPSII") %>%
+    dplyr::select(Plant_ID, Replicate, dplyr::starts_with("QY_L"), colour) %>%
+    tidyr::pivot_longer(cols = dplyr::starts_with("QY_L"), names_to = "Timepoint", values_to = "PhiPSII") %>%
     dplyr::mutate(Time = as.numeric(gsub("QY_L", "", Timepoint)) * 10)
 
   dflist <- list(FvFm =fvfm_long,
@@ -181,40 +181,44 @@ custom_reds   <- c("#8B0000",
   fvfm <- data$FvFm
   PSII <- data$PSII
 
+  # basta
+  selection <- fvfm %>%
+    select(Plant_ID, colour)%>%
+    distinct()
+
   #fvfm >> Calculate means and sd and count technical reps
   fvfm_tech_reps <- as.data.frame(table(fvfm$Plant_ID))%>%
     dplyr::rename(Plant_ID = Var1, techreps = Freq)
 
-  fvfm_mean_df<-aggregate(fvfm$FvFm, list(fvfm$Plant_ID), mean)%>%
+  fvfm_mean_df<-stats::aggregate(fvfm$FvFm, list(fvfm$Plant_ID), mean)%>%
     dplyr::rename(Plant_ID = Group.1, FvFm_Mean = x)
 
-  fvfm_sd_df<-aggregate(fvfm$FvFm, list(fvfm$Plant_ID), sd)%>%
+  fvfm_sd_df<-stats::aggregate(fvfm$FvFm, list(fvfm$Plant_ID), sd)%>%
     dplyr::rename(Plant_ID = Group.1,FvFm_SD = x)
 
   summary_FvFm_BioReps <- merge(fvfm_mean_df, fvfm_sd_df, by = "Plant_ID")
   summary_FvFm_BioReps$Plant_ID <- as.factor(summary_FvFm_BioReps$Plant_ID)
   summary_FvFm_BioReps <- fvfm_tech_reps %>%
     dplyr::full_join(summary_FvFm_BioReps)%>%
-    dplyr::left_join(smartsheets_mod, by = "Plant_ID")%>%
-    dplyr::mutate(colour = if_else(`BASTA result` == "Positive", "green", "red"))
+    dplyr::left_join(selection, by = "Plant_ID")
 
 
   #PSII >> Calculate means and sd and count technical reps
   PSII_tech_reps <- as.data.frame(table(PSII$Plant_ID))%>%
     dplyr::rename(Plant_ID = Var1, techreps = Freq)
 
-  PSII_mean_df<-aggregate(PSII$PhiPSII, list(PSII$Plant_ID), mean)%>%
+  PSII_mean_df<-stats::aggregate(PSII$PhiPSII, list(PSII$Plant_ID), mean)%>%
     dplyr::rename(Plant_ID = Group.1, PSII_Mean = x)
 
-  PSII_sd_df<-aggregate(PSII$PhiPSII, list(PSII$Plant_ID), sd)%>%
+  PSII_sd_df<-stats::aggregate(PSII$PhiPSII, list(PSII$Plant_ID), sd)%>%
     dplyr::rename(Plant_ID = Group.1,PSII_SD = x)
 
   summary_PSII_BioReps <- merge(PSII_mean_df, PSII_sd_df, by = "Plant_ID")
   summary_PSII_BioReps$Plant_ID <- as.factor(summary_PSII_BioReps$Plant_ID)
   summary_PSII_BioReps <- PSII_tech_reps %>%
     dplyr::full_join(summary_PSII_BioReps)%>%
-    dplyr::left_join(smartsheets_mod, by = "Plant_ID")%>%
-    dplyr::mutate(colour = if_else(`BASTA result` == "Positive", "green", "red"))
+    dplyr::left_join(selection, by = "Plant_ID")
+
 
   out <- list(FvFm = summary_FvFm_BioReps,
               PSII = summary_PSII_BioReps)
@@ -233,6 +237,12 @@ custom_reds   <- c("#8B0000",
   }
 }
 
+# utils::globalVariables(c("plate_names", "Construct_ID", "Plant_ID", "Replicate",
+#                          "wells","QY_max","Fv/Fm_L1", "Fv/Fm_L2",
+#                          "Fv/Fm_L3","Fv/Fm_L4", "QY_L1", "QY_L2", "QY_L3",
+#                          "QY_L4", "BASTA result", "colour", "Timepoint",
+#                          "color_value", "FvFm","Bar_copy", "PhiPSII", "Var1",
+#                          "Freq","Group.1", "x", "sd",  ))
 
 
 

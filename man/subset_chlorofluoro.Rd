@@ -6,16 +6,18 @@
 \usage{
 subset_chlorofluoro(
   data,
+  output_location,
   copyNumber = 4,
   BASTA = "positive",
   width = 15,
-  height = 5,
-  output_location
+  height = 5
 )
 }
 \arguments{
 \item{data}{data.frame or list of data.frame; data output from
 computeFvFm_PSII\code{\link[=computeFvFm_PSII]{computeFvFm_PSII()}}}
+
+\item{output_location}{path; location to save output files}
 
 \item{copyNumber}{numeric; copy number to select for}
 
@@ -24,8 +26,6 @@ computeFvFm_PSII\code{\link[=computeFvFm_PSII]{computeFvFm_PSII()}}}
 \item{width}{numeric; pdf width size. deafult is 15}
 
 \item{height}{numeric;pdf height size. deafult is 5}
-
-\item{output_location}{path; location to save output files}
 }
 \value{
 This outputs a plot and excel document in the same way as
@@ -41,8 +41,7 @@ select for those with a copy number value of 4 and BASTA positive
 \examples{
 data("step_one")
 output_location <- tempdir()
-step_two <- subset_chlorofluoro(step_one,
-output_location)
+step_two <- subset_chlorofluoro(step_one, output_location )
 
 
 }

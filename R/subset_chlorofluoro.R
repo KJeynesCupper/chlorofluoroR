@@ -21,8 +21,7 @@
 #' @examples
 #' data("step_one")
 #' output_location <- tempdir()
-#' step_two <- subset_chlorofluoro(step_one,
-#' output_location)
+#' step_two <- subset_chlorofluoro(step_one, output_location )
 #'
 #'
 #' @export
@@ -41,13 +40,14 @@
 #' @importFrom ggplot2 theme_bw
 #' @importFrom ggplot2 stat_summary
 #' @importFrom patchwork wrap_plots
+#' @importFrom ggplot2 mean_se
+#' @importFrom dplyr bind_rows
 
-subset_chlorofluoro <- function(data,
+subset_chlorofluoro <- function(data,output_location,
                                copyNumber = 4,
                                BASTA = "positive",
                                width= 15,
-                               height = 5,
-                               output_location){
+                               height = 5){
 
   if(BASTA =="positive"){
     basta_result <- "green"
@@ -67,12 +67,12 @@ subset_chlorofluoro <- function(data,
     })
 
     # select for Fvfm values:
-    combined_FvFm <- bind_rows(
+    combined_FvFm <- dplyr::bind_rows(
       lapply(filtered_df, function(x) x[["FvFm"]]),
       .id = "plate")
 
     # select for PSII values:
-    combined_PSII <- bind_rows(
+    combined_PSII <- dplyr::bind_rows(
       lapply(filtered_df, function(x) x[["PSII"]]),
       .id = "plate")
 

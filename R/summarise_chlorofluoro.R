@@ -11,7 +11,6 @@
 #'@param output_location path; location to save output files
 #'@param width numeric; pdf width size. deafult is 18
 #'@param height numeric;pdf height size. deafult is 25
-#'
 #' @return Output is also saved as an excel document
 #' (one sheet per plate and variable). See output as files
 #' "chlorofluoro_plot_3.pdf" and "chlorofluoro_dataset_3.xlsx"
@@ -19,8 +18,10 @@
 #'
 #' @examples
 #' data("step_one")
+#' data("selection_results")
 #' output_location <- tempdir()
-#' step_three <- chlorofluor_summary(step_one, output_location)
+#' output_location <- "/Users/kejc/"
+#' step_three <- summarise_chlorofluoro(step_one, output_location)
 #'
 #' @export
 #' @importFrom dplyr %>%
@@ -38,17 +39,18 @@
 #' @importFrom ggplot2 theme_bw
 #' @importFrom ggplot2 stat_summary
 #' @importFrom patchwork wrap_plots
+#' @importFrom ggplot2 mean_se
 
 
 
 summarise_chlorofluoro <- function(data,
                                    output_location,
-                                   width= 18,
+                                   width= 25,
                                    height = 25){
 
   if (.function5(data)){ # for a  nested list
 
-    out_summary <- mapply(.function4,data,SIMPLIFY = FALSE)
+    out_summary <- mapply(.function4,data, SIMPLIFY = FALSE)
     # save data
     .function3(out_summary, file.path(output_location, "chlorofluoro_dataset_3.xlsx"))
     message("Data saved to ", file.path(output_location, "chlorofluoro_dataset_3.xlsx"))
@@ -109,15 +111,8 @@ summarise_chlorofluoro <- function(data,
 
     }
 
-    #save
-    big_plot2 <- patchwork::wrap_plots(store_plots2, ncol = 2) # choose number of columns
-    pdf(file.path(output_location, "chlorofluoro_plot_3.pdf"), width= width, height = height)
-    print(big_plot2)
-    dev.off()
-
-  }
-  else {
-    out_summary <- .function4(data)
+  } else {
+    out_summary <- .function4(data, smartsheet)
     # save data
     .function3(out_summary, file.path(output_location, "chlorofluoro_dataset_3.xlsx"))
     message("Data saved to ", file.path(output_location, "chlorofluoro_dataset_3.xlsx"))
@@ -170,12 +165,12 @@ summarise_chlorofluoro <- function(data,
       plotTheme+
       ggplot2::theme(axis.text.x = ggplot2::element_text(angle = 45, hjust = 1))
 
-    big_plot2 <- patchwork::wrap_plots(list(p3, p4), ncol = 2) # choose number of columns
-    pdf(file.path(output_location, "chlorofluoro_plot_3.pdf"), width= width, height = height)
-    print(big_plot2)
-    dev.off()
-    message("Plots saved to ", file.path(output_location, "chlorofluoro_plot_3.pdf"))
-
-
+    store_plots2 <- list(p3, p4)
   }
+
+  #save
+  big_plot2 <- patchwork::wrap_plots(store_plots2, ncol = 2) # choose number of columns
+  pdf(file.path(output_location, "chlorofluoro_plot_3.pdf"), width= width, height = height)
+  print(big_plot2)
+  dev.off()
 }

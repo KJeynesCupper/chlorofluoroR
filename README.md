@@ -149,7 +149,7 @@ document (one sheet per plate and variable). See output as files
 
 ``` r
 data("step_one")
-step_three <- chlorofluor_summary(step_one, output_location)
+step_three <- summarise_chlorofluoro(step_one, output_location)
 
 ```
 

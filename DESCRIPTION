@@ -6,7 +6,7 @@ Authors@R: c(person("Katie", "Jeynes-Cupper",
     email = "kejc@illinois.edu", role = c("aut", "cre"), 
      comment = c(ORCID = "0009-0000-1350-1371")))
 Description: Data processing and plotting of FvFm and PSII. 
-License:
+License:MIT + file LICENSE
 Depends:
     R (>= 4.3.0)
 VignetteBuilder:
@@ -16,20 +16,19 @@ LazyData: FALSE
 Roxygen: list(markdown = TRUE)
 RoxygenNote: 7.3.2
 Suggests: 
-    knitr,
     rmarkdown,
-    BiocStyle
+    BiocStyle,
+    knitr
 Imports: 
     dplyr,
     tidyr, 
     ggplot2, 
-    BiocGenerics,
     reshape2,
     openxlsx,
-    readxl,
-    purrr, 
-    scales,
-    patchwork
+    patchwork,
+    grDevices,
+    utils,
+    stats
 biocViews: 
     Visualization,
     Preprocessing

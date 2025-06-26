@@ -53,7 +53,7 @@ data("layout")
 data("selection_results")
 data("copynumber")
 
-output_location = tempdir()
+output_location <-  tempdir()
 step_one <- computeFvFm_PSII(CF_demodata,
 plate_names = names(CF_demodata),
 layout,
