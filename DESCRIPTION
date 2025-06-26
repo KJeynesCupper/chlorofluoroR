@@ -1,0 +1,37 @@
+Package: chlorofluoroR
+Type: Package
+Title: chlorofluroR: In-house package to process CF imaging data 
+Version:  0.1.0
+Authors@R: c(person("Katie", "Jeynes-Cupper", 
+    email = "kejc@illinois.edu", role = c("aut", "cre"), 
+     comment = c(ORCID = "0009-0000-1350-1371")))
+Description: Data processing and plotting of FvFm and PSII. 
+License:
+Depends:
+    R (>= 4.3.0)
+VignetteBuilder:
+    knitr
+Encoding: UTF-8
+LazyData: FALSE
+Roxygen: list(markdown = TRUE)
+RoxygenNote: 7.3.2
+Suggests: 
+    knitr,
+    rmarkdown,
+    BiocStyle
+Imports: 
+    dplyr,
+    tidyr, 
+    ggplot2, 
+    BiocGenerics,
+    reshape2,
+    openxlsx,
+    readxl,
+    purrr, 
+    scales,
+    patchwork
+biocViews: 
+    Visualization,
+    Preprocessing
+BiocType: Software
+BugReports: https://github.com/KJeynesCupper/chlorofluro/issues
