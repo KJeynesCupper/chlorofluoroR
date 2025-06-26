@@ -13,7 +13,8 @@ Data processing and plotting of FvFm and PSII.
 \seealso{
 Useful links:
 \itemize{
-  \item Report bugs at \url{https://github.com/KJeynesCupper/chlorofluro/issues}
+  \item \url{https://kjeynescupper.github.io/chlorofluoroR/}
+  \item Report bugs at \url{https://github.com/KJeynesCupper/chlorofluoroR/issues}
 }
 
 }

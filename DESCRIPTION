@@ -33,5 +33,5 @@ biocViews:
     Visualization,
     Preprocessing
 BiocType: Software
-BugReports: https://github.com/KJeynesCupper/chlorofluro/issues
+BugReports: https://github.com/KJeynesCupper/chlorofluoroR/issues
 URL: https://kjeynescupper.github.io/chlorofluoroR/
