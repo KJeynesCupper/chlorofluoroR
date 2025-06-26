@@ -1,12 +1,12 @@
 Package: chlorofluoroR
 Type: Package
 Title: chlorofluroR: In-house package to process CF imaging data 
-Version:  0.1.0
+Version: 0.1.0
 Authors@R: c(person("Katie", "Jeynes-Cupper", 
     email = "kejc@illinois.edu", role = c("aut", "cre"), 
      comment = c(ORCID = "0009-0000-1350-1371")))
 Description: Data processing and plotting of FvFm and PSII. 
-License:MIT + file LICENSE
+License: MIT + file LICENSE
 Depends:
     R (>= 4.3.0)
 VignetteBuilder:
@@ -34,3 +34,4 @@ biocViews:
     Preprocessing
 BiocType: Software
 BugReports: https://github.com/KJeynesCupper/chlorofluro/issues
+URL: https://kjeynescupper.github.io/chlorofluoroR/
