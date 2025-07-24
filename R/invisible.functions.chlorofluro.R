@@ -272,6 +272,21 @@ custom_reds   <- c("#8B0000",
                        label_size){
   store_plots <- list()
 
+  if(is.null(colour_palette)){
+    # Extract all data frames in the nested list that contain "FvFm"
+    result <- lapply(list_of_dfs, function(sublist) {
+      Filter(function(df) "FvFm" %in% names(df), sublist)
+    })
+    # Flatten the result if you want a single list of matching dfs
+    result_flat <- do.call(c, result)
+    final_df <- do.call(rbind, result_flat)
+
+    len <- length(unique(final_df$BAR_copy))
+    colour_palette <-viridis::viridis(len, option = "D")
+    #grDevices::colorRampPalette(RColorBrewer::brewer.pal(9, "Spectral"))(len)
+  }
+
+
   for (i in 1:length(list_of_dfs)) {
     # depending on input:
     if(.function5(list_of_dfs) == TRUE) {
@@ -283,10 +298,10 @@ custom_reds   <- c("#8B0000",
     plate_PSII <- plate$PSII
     val <- names(list_of_dfs[i])
 
-    if(is.null(colour_palette)){
-      len <- length(unique(plate_fvfm$Plant_ID))
-      colour_palette <- custom_greens[3:len]
-    }
+    # if(is.null(colour_palette)){
+    #   len <- length(unique(plate_fvfm$Plant_ID))
+    #   colour_palette <- custom_greens[3:len]
+    # }
 
 
     plate_fvfm_summary <- plate_fvfm %>%
@@ -315,6 +330,14 @@ custom_reds   <- c("#8B0000",
       dplyr::group_by(Plant_ID) %>%
       dplyr::slice_max(Time, n = 1)
 
+    # Prepare colors (as before)
+    plant_colors <- plate_fvfm_summary %>%
+      distinct(Plant_ID, BAR_copy) %>%
+      arrange(Plant_ID) %>%
+      pull(BAR_copy) %>%
+      as.factor()
+    # set names
+    names(colour_palette) <- levels(plant_colors)
 
 
     p1 <- ggplot2::ggplot(plate_fvfm_summary,
@@ -326,7 +349,7 @@ custom_reds   <- c("#8B0000",
       ggplot2::labs(x = "Time (min)", y = "Fv/Fm", title = paste0(val, " FvFm"),
                     linetype="Selection screen", colour="Copy No.") +
       ggplot2::theme_bw() +
-      plotTheme_v2+
+      plotTheme+
       ggplot2::scale_linetype_manual(values = c("pass" = "solid", "fail" = "dashed"))+
       ggplot2::theme(legend.box = "vertical", legend.key.width = grid::unit(1, "cm"))+
       ggrepel::geom_text_repel(data = plate_fvfm_labels,

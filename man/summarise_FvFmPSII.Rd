@@ -4,13 +4,25 @@
 \alias{summarise_FvFmPSII}
 \title{Summarise the FvFm and PSII values for each plant line.}
 \usage{
-summarise_FvFmPSII(data, output_location, width = 25, height = 25)
+summarise_FvFmPSII(
+  data,
+  copynumber,
+  output_location,
+  colour_palette = NULL,
+  width = 25,
+  height = 25
+)
 }
 \arguments{
 \item{data}{data.frame or list of data.frame; data output from
 computeFvFm_PSII\code{\link[=computeFvFm_PSII]{computeFvFm_PSII()}}}
 
+\item{copynumber}{data.frame; copy number results.}
+
 \item{output_location}{path; location to save output files}
+
+\item{colour_palette}{character; colour palette for ggplot. Default is NULL,
+when used plots use packages default green palette (n=19).}
 
 \item{width}{numeric; pdf width size. deafult is 18}
 
@@ -30,8 +42,8 @@ As before, the colour is determined by the BASTA selection result.
 \examples{
 data("step_one")
 data("selection_results")
+data("copynumber")
 output_location <- tempdir()
-output_location <- "/Users/kejc/"
-step_three <- summarise_FvFmPSII(step_one, output_location)
+step_three <- summarise_FvFmPSII(step_one, copynumber, output_location)
 
 }
