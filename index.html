@@ -139,7 +139,8 @@
 <span>                              <span class="va">layout</span>, </span>
 <span>                              <span class="va">smartsheet</span>,</span>
 <span>                              <span class="va">copynumber</span>,</span>
-<span>                              <span class="va">output_location</span><span class="op">)</span></span></code></pre></div>
+<span>                              <span class="va">output_location</span>, </span>
+<span>                              version <span class="op">=</span><span class="fl">3</span> <span class="op">)</span></span></code></pre></div>
 <p>This will return a list of dataframes, where each plates has a dataframe for FvFm and PSII. And saves an excel file containing all data (chlorofluoro_dataset_1.xlsx)and pdf plot for the FvFm and PSII (chlorofluoro_plot_1.pdf). The plot is a line graph with SD at each timepoint for each plant sample. The colour of each sample is determined by the BASTA selection results, where green represents positive (ie. resistant) and red represents negative (ie. not resistant). The line type is determined by the copy number </p>
 <p><br></p>
 </div>
@@ -149,7 +150,7 @@
 <p>We want to use this data to help us select for lines to carry to T2. So, here we will filter for these desired traits. For example, we will select for those with a copy number value of 4 and BASTA positive (ie. resistant).</p>
 <div class="sourceCode" id="cb5"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/utils/data.html" class="external-link">data</a></span><span class="op">(</span><span class="st">"step_one"</span><span class="op">)</span></span>
-<span><span class="va">step_two</span> <span class="op">&lt;-</span> <span class="fu"><a href="reference/subset_chlorofluoro.html">subset_chlorofluoro</a></span><span class="op">(</span><span class="va">step_one</span>, <span class="va">output_location</span><span class="op">)</span></span></code></pre></div>
+<span><span class="va">step_two</span> <span class="op">&lt;-</span> <span class="fu"><a href="reference/subset_FvFmPSII.html">subset_FvFmPSII</a></span><span class="op">(</span><span class="va">step_one</span>, <span class="va">output_location</span><span class="op">)</span></span></code></pre></div>
 <p>This outputs a plot and excel document in the same way as compute_chlorofluor() function. See output as files “chlorofluoro_plot_2.pdf” and “chlorofluoro_dataset_2.xlsx” <br></p>
 </div>
 <div class="section level2">
@@ -158,7 +159,7 @@
 <p>Instead of looking at the distribution of the FvFm or PSII over multiple light pulses across time, we can calculate a mean. Here we plot the mean for these variables as a bar plot with error bars representing SD. As before, the colour is determined by the BASTA selection result. Output is also saved as an excel document (one sheet per plate and variable). See output as files “chlorofluoro_plot_3.pdf” and “chlorofluoro_dataset_3.xlsx”</p>
 <div class="sourceCode" id="cb6"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/utils/data.html" class="external-link">data</a></span><span class="op">(</span><span class="st">"step_one"</span><span class="op">)</span></span>
-<span><span class="va">step_three</span> <span class="op">&lt;-</span> <span class="fu"><a href="reference/summarise_chlorofluoro.html">summarise_chlorofluoro</a></span><span class="op">(</span><span class="va">step_one</span>, <span class="va">output_location</span><span class="op">)</span></span></code></pre></div>
+<span><span class="va">step_three</span> <span class="op">&lt;-</span> <span class="fu"><a href="reference/summarise_FvFmPSII.html">summarise_FvFmPSII</a></span><span class="op">(</span><span class="va">step_one</span>, <span class="va">output_location</span><span class="op">)</span></span></code></pre></div>
 <p><br></p>
 </div>
 </div>
