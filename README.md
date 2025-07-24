@@ -44,7 +44,7 @@ GitHub repo:
 ``` r
 
 if (!require("devtools")) install.packages("devtools")
-devtools::install_github("KJeynesCupper/chlorofluoroR", ref = "main")
+devtools::install_github("KJeynesCupper/chlorofluoroR", ref = "master")
 
 ```
 
