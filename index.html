@@ -118,7 +118,7 @@
 <h2 id="id_1-load-data-into-r">1. Load data into R<a class="anchor" aria-label="anchor" href="#id_1-load-data-into-r"></a>
 </h2>
 <p>First we must load our: - plate layouts - copy number results - Data from FluorCam software (frames-numeric) - BASTA selection</p>
-<p>DO NOT RUN THIS CODE</p>
+<p>This the demo data:</p>
 <div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/utils/data.html" class="external-link">data</a></span><span class="op">(</span><span class="st">"CF_demodata"</span><span class="op">)</span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/utils/data.html" class="external-link">data</a></span><span class="op">(</span><span class="st">"layout"</span><span class="op">)</span></span>
@@ -128,12 +128,55 @@
 <span><span class="va">plate_names</span> <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/names.html" class="external-link">names</a></span><span class="op">(</span><span class="va">CF_demodata</span><span class="op">)</span></span>
 <span><span class="va">smartsheet</span> <span class="op">=</span> <span class="va">selection_results</span></span></code></pre></div>
 <p><br></p>
+<p>You can organise the data for input using this code:</p>
+<div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span></span>
+<span><span class="co"># Read plate layouts</span></span>
+<span><span class="va">Plate1layout</span> <span class="op">&lt;-</span> <span class="fu">readxl</span><span class="fu">::</span><span class="fu">read_xlsx</span><span class="op">(</span><span class="st">"./data_plate_layout.xlsx"</span>, sheet <span class="op">=</span> <span class="st">"Plate1"</span><span class="op">)</span><span class="op">%&gt;%</span></span>
+<span>  <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/rename.html" class="external-link">rename</a></span><span class="op">(</span>Plant_ID <span class="op">=</span> <span class="va">`Plant ID`</span>, Construct_ID <span class="op">=</span> <span class="va">`Construct ID`</span> <span class="op">)</span></span>
+<span><span class="va">Plate2layout</span> <span class="op">&lt;-</span> <span class="fu">readxl</span><span class="fu">::</span><span class="fu">read_xlsx</span><span class="op">(</span><span class="st">"./data_plate_layout.xlsx"</span>, sheet <span class="op">=</span> <span class="st">"Plate2"</span><span class="op">)</span><span class="op">%&gt;%</span></span>
+<span>  <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/rename.html" class="external-link">rename</a></span><span class="op">(</span>Plant_ID <span class="op">=</span> <span class="va">`Plant ID`</span>, Construct_ID <span class="op">=</span> <span class="va">`Construct ID`</span> <span class="op">)</span></span>
+<span><span class="va">Plate3layout</span> <span class="op">&lt;-</span> <span class="fu">readxl</span><span class="fu">::</span><span class="fu">read_xlsx</span><span class="op">(</span><span class="st">"./data_plate_layout.xlsx"</span>, sheet <span class="op">=</span> <span class="st">"Plate3"</span><span class="op">)</span><span class="op">%&gt;%</span></span>
+<span>  <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/rename.html" class="external-link">rename</a></span><span class="op">(</span>Plant_ID <span class="op">=</span> <span class="va">`Plant ID`</span>, Construct_ID <span class="op">=</span> <span class="va">`Construct ID`</span> <span class="op">)</span></span>
+<span><span class="va">Plate4layout</span> <span class="op">&lt;-</span> <span class="fu">readxl</span><span class="fu">::</span><span class="fu">read_xlsx</span><span class="op">(</span><span class="st">"./data_plate_layout.xlsx"</span>, sheet <span class="op">=</span> <span class="st">"Plate4"</span><span class="op">)</span><span class="op">%&gt;%</span></span>
+<span>  <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/rename.html" class="external-link">rename</a></span><span class="op">(</span>Plant_ID <span class="op">=</span> <span class="va">`Plant ID`</span>, Construct_ID <span class="op">=</span> <span class="va">`Construct ID`</span> <span class="op">)</span></span>
+<span></span>
+<span></span>
+<span><span class="va">layout_list</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span>Plate1 <span class="op">=</span> <span class="va">Plate1layout</span>,</span>
+<span>                    Plate2 <span class="op">=</span> <span class="va">Plate2layout</span>,</span>
+<span>                    Plate3 <span class="op">=</span> <span class="va">Plate3layout</span>,</span>
+<span>                    Plate4 <span class="op">=</span> <span class="va">Plate4layout</span><span class="op">)</span></span>
+<span></span>
+<span><span class="co"># state output location:</span></span>
+<span><span class="va">output_location</span> <span class="op">=</span> <span class="st">"../4_analysis_chlorofluoro/"</span></span>
+<span></span>
+<span></span>
+<span><span class="co"># load data file of interest from CF imager</span></span>
+<span><span class="va">Plate1</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/utils/read.table.html" class="external-link">read.table</a></span><span class="op">(</span><span class="st">"250528-DC33-Plate1-a1-frames-numeric.TXT"</span>, sep <span class="op">=</span> <span class="st">"\t"</span>, skip <span class="op">=</span> <span class="fl">2</span>, header <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span>
+<span><span class="va">Plate2</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/utils/read.table.html" class="external-link">read.table</a></span><span class="op">(</span><span class="st">"250528-DC33-Plate2-a1-frames-numeric.TXT"</span>, sep <span class="op">=</span> <span class="st">"\t"</span>, skip <span class="op">=</span> <span class="fl">2</span>, header <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span>
+<span><span class="va">Plate3</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/utils/read.table.html" class="external-link">read.table</a></span><span class="op">(</span><span class="st">"250528-DC33-Plate3-a1-frames-numeric.TXT"</span>, sep <span class="op">=</span> <span class="st">"\t"</span>, skip <span class="op">=</span> <span class="fl">2</span>, header <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span>
+<span><span class="va">Plate4</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/utils/read.table.html" class="external-link">read.table</a></span><span class="op">(</span><span class="st">"250528-DC33-Plate4-a1-frames-numeric.TXT"</span>, sep <span class="op">=</span> <span class="st">"\t"</span>, skip <span class="op">=</span> <span class="fl">2</span>, header <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span>
+<span></span>
+<span><span class="va">data</span><span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span>Plate1 <span class="op">=</span> <span class="va">Plate1</span>,</span>
+<span>                          Plate2 <span class="op">=</span> <span class="va">Plate2</span>,</span>
+<span>                          Plate3 <span class="op">=</span> <span class="va">Plate3</span>,</span>
+<span>                          Plate4 <span class="op">=</span> <span class="va">Plate4</span><span class="op">)</span></span>
+<span></span>
+<span></span>
+<span><span class="co"># add colours based on basta result::</span></span>
+<span><span class="va">smartsheets</span> <span class="op">&lt;-</span> <span class="fu">readxl</span><span class="fu">::</span><span class="fu">read_xlsx</span><span class="op">(</span><span class="st">"../DC33_T1_lines_smartsheets.xlsx"</span><span class="op">)</span></span>
+<span><span class="va">smartsheets_mod</span> <span class="op">&lt;-</span>  <span class="fu"><a href="https://rdrr.io/r/base/as.data.frame.html" class="external-link">as.data.frame</a></span><span class="op">(</span><span class="va">smartsheets</span><span class="op">)</span> <span class="op">%&gt;%</span></span>
+<span>  <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/select.html" class="external-link">select</a></span><span class="op">(</span>Plant_ID<span class="op">=</span> <span class="va">`Plant ID`</span>, <span class="va">`BASTA result`</span><span class="op">)</span></span>
+<span></span>
+<span><span class="co"># load copy number data </span></span>
+<span><span class="va">copynumber</span> <span class="op">&lt;-</span> <span class="fu">readxl</span><span class="fu">::</span><span class="fu">read_xlsx</span><span class="op">(</span><span class="st">"./Copynumberfile_Results.xlsx"</span><span class="op">)</span></span></code></pre></div>
+<p>You can find file template in the folder “Templates”</p>
 </div>
 <div class="section level2">
 <h2 id="id_2-computing-the-fvfm-and-psii-distribution">2. Computing the FvFm and PSII distribution<a class="anchor" aria-label="anchor" href="#id_2-computing-the-fvfm-and-psii-distribution"></a>
 </h2>
 <p>This function wrangles the raw data from the FluorCam software, and organises it into a nice excel spreadsheet. This excel doc will have separate sheets for the FvFm and PSII data - these will be specific for each plate.</p>
-<div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb5"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">step_one</span> <span class="op">&lt;-</span> <span class="fu"><a href="reference/computeFvFm_PSII.html">computeFvFm_PSII</a></span><span class="op">(</span><span class="va">CF_demodata</span>, </span>
 <span>                              <span class="va">plate_names</span>, </span>
 <span>                              <span class="va">layout</span>, </span>
@@ -142,13 +185,18 @@
 <span>                              <span class="va">output_location</span>, </span>
 <span>                              version <span class="op">=</span><span class="fl">3</span> <span class="op">)</span></span></code></pre></div>
 <p>This will return a list of dataframes, where each plates has a dataframe for FvFm and PSII. And saves an excel file containing all data (chlorofluoro_dataset_1.xlsx)and pdf plot for the FvFm and PSII (chlorofluoro_plot_1.pdf). The plot is a line graph with SD at each timepoint for each plant sample. The colour of each sample is determined by the BASTA selection results, where green represents positive (ie. resistant) and red represents negative (ie. not resistant). The line type is determined by the copy number </p>
-<p><br></p>
+<p>There are four different versions of this plot: - Version 1 = coloured based on selection result, and linetype represents copy number.</p>
+<ul>
+<li><p>Version 2 = coloured based on copy number, and linetype represents selection result with each plant labeled within the plot</p></li>
+<li><p>Version 3 = coloured based on copy number, and linetype/shape represents selection result with each line labeled via the legend.</p></li>
+<li><p>Version 4 = Grouping plants based on copy number. <br></p></li>
+</ul>
 </div>
 <div class="section level2">
 <h2 id="id_2-subset-for-specific-combinations">2. Subset for specific combinations<a class="anchor" aria-label="anchor" href="#id_2-subset-for-specific-combinations"></a>
 </h2>
 <p>We want to use this data to help us select for lines to carry to T2. So, here we will filter for these desired traits. For example, we will select for those with a copy number value of 4 and BASTA positive (ie. resistant).</p>
-<div class="sourceCode" id="cb5"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb6"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/utils/data.html" class="external-link">data</a></span><span class="op">(</span><span class="st">"step_one"</span><span class="op">)</span></span>
 <span><span class="va">step_two</span> <span class="op">&lt;-</span> <span class="fu"><a href="reference/subset_FvFmPSII.html">subset_FvFmPSII</a></span><span class="op">(</span><span class="va">step_one</span>, <span class="va">output_location</span>, copyNumber <span class="op">=</span> <span class="fl">4</span>,</span>
 <span>  BASTA <span class="op">=</span> <span class="st">"positive"</span><span class="op">)</span></span></code></pre></div>
@@ -158,7 +206,7 @@
 <h2 id="id_3-summarise-the-fvfm-and-psii-values-for-each-plant-line">3. Summarise the FvFm and PSII values for each plant line.<a class="anchor" aria-label="anchor" href="#id_3-summarise-the-fvfm-and-psii-values-for-each-plant-line"></a>
 </h2>
 <p>Instead of looking at the distribution of the FvFm or PSII over multiple light pulses across time, we can calculate a mean. Here we plot the mean for these variables as a bar plot with error bars representing SD. As before, the colour is determined by the BASTA selection result. Output is also saved as an excel document (one sheet per plate and variable). See output as files “chlorofluoro_plot_3.pdf” and “chlorofluoro_dataset_3.xlsx”</p>
-<div class="sourceCode" id="cb6"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb7"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/utils/data.html" class="external-link">data</a></span><span class="op">(</span><span class="st">"step_one"</span><span class="op">)</span></span>
 <span><span class="va">step_three</span> <span class="op">&lt;-</span> <span class="fu"><a href="reference/summarise_FvFmPSII.html">summarise_FvFmPSII</a></span><span class="op">(</span><span class="va">step_one</span>, <span class="va">output_location</span><span class="op">)</span></span></code></pre></div>
 <p><br></p>
