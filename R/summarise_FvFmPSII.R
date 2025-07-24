@@ -44,6 +44,7 @@
 #' @importFrom ggplot2 stat_summary
 #' @importFrom patchwork wrap_plots
 #' @importFrom ggplot2 mean_se
+#' @import ggpubr
 #' @import grDevices
 
 summarise_FvFmPSII <- function(data,copynumber,
@@ -126,7 +127,7 @@ summarise_FvFmPSII <- function(data,copynumber,
                       linetype = "Selection screen") +
         ggplot2::theme_bw() +
         ggplot2::guides(color = "none",
-                        linetype = guide_legend(override.aes = list(fill = NA,
+                        linetype = ggplot2::guide_legend(override.aes = list(fill = NA,
                                                                     col = "black")))+
         plotTheme+
         ggplot2::scale_y_continuous(expand = ggplot2::expansion(mult = c(0, 0.05)))+
@@ -146,7 +147,7 @@ summarise_FvFmPSII <- function(data,copynumber,
                       linetype = "Selection screen") +
         ggplot2::theme_bw() +
         ggplot2::guides(color = "none",
-                        linetype = guide_legend(override.aes = list(fill = NA,
+                        linetype = ggplot2::guide_legend(override.aes = list(fill = NA,
                                                                     col = "black")))+
         ggplot2::scale_color_manual(values = c("pass" = "black", "fail" = "black")) +
       ggplot2::scale_linetype_manual(values = c("pass" = "solid", "fail" = "dashed")) +
@@ -160,7 +161,7 @@ summarise_FvFmPSII <- function(data,copynumber,
 
     }
     p_legend <- which_max*2
-    legend <- get_legend(store_plots2[[p_legend]] + theme(legend.position = "right", legend.box = "vertical"))
+    legend <- ggpubr::get_legend(store_plots2[[p_legend]] + ggplot2::theme(legend.position = "right", legend.box = "vertical"))
 
   } else {
     out_summary <- .function4(data)
@@ -256,8 +257,11 @@ summarise_FvFmPSII <- function(data,copynumber,
 
 
   grDevices::pdf(file.path(output_location, "chlorofluoro_plot_3.pdf"), width= width, height = height )
-  print(ggarrange(plotlist=store_plots2, ncol = 2, nrow = 4,  common.legend = T, legend.grob = legend,
-            legend = "right"))
+  print(ggpubr::ggarrange(plotlist=store_plots2,
+                          ncol = 2, nrow = 4,
+                          common.legend = T,
+                          legend.grob = legend,
+                          legend = "right"))
   grDevices::dev.off()
 }
 
