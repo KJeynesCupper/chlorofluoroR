@@ -48,7 +48,6 @@ distribution.</p>
 <span>  <span class="va">copynumber</span>,</span>
 <span>  <span class="va">output_location</span>,</span>
 <span>  colour_palette <span class="op">=</span> <span class="cn">NULL</span>,</span>
-<span>  version <span class="op">=</span> <span class="fl">1</span>,</span>
 <span>  width <span class="op">=</span> <span class="fl">20</span>,</span>
 <span>  height <span class="op">=</span> <span class="fl">25</span>,</span>
 <span>  label_size <span class="op">=</span> <span class="fl">5</span></span>
@@ -89,17 +88,6 @@ distribution.</p>
 when used plots use packages default green palette (n=19).</p></dd>
 
 
-<dt id="arg-version">version<a class="anchor" aria-label="anchor" href="#arg-version"></a></dt>
-<dd><p>numeric; version of plot, choose from 1, 2, and 3. Each returns
-a slightly different way to plot the data.
-Version 1 = coloured based on selection result, and linetype represents
-copy number.
-Version 2 = coloured based on copy number, and linetype represents
-selection result with each plant labeled within the plot</p>
-<p>Version 3 = coloured based on copy number, and linetype/shape represents
-selection result with each line labeled via the legend.</p></dd>
-
-
 <dt id="arg-width">width<a class="anchor" aria-label="anchor" href="#arg-width"></a></dt>
 <dd><p>numeric; pdf width size. deafult is 20.</p></dd>
 
@@ -117,6 +105,12 @@ selection result with each line labeled via the legend.</p></dd>
     <p>Returns a list of dataframes, where each plates has a dataframe for
 FvFm and PSII. Saves an excel file containing all data and a plot for
 FvFm and PSII.</p>
+<p>Version 1 = coloured based on selection result, and linetype represents
+copy number.
+Version 2 = coloured based on copy number, and linetype represents
+selection result with each plant labeled within the plot</p>
+<p>Version 3 = coloured based on copy number, and linetype/shape represents
+selection result with each line labeled via the legend.</p>
     </div>
     <div class="section level2">
     <h2 id="details">Details<a class="anchor" aria-label="anchor" href="#details"></a></h2>
@@ -138,41 +132,7 @@ directory.</p>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="va">step_one</span> <span class="op">&lt;-</span> <span class="fu">computeFvFm_PSII</span><span class="op">(</span><span class="va">CF_demodata</span>,<span class="va">plate_names</span>,<span class="va">layout</span>,<span class="va">smartsheet</span> ,</span></span>
 <span class="r-in"><span><span class="va">copynumber</span>,<span class="va">output_location</span>, version <span class="op">=</span><span class="fl">3</span><span class="op">)</span></span></span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> Data saved to /tmp/Rtmps2DQ6W/chlorofluoro_dataset_1.xlsx</span>
-<span class="r-wrn co"><span class="r-pr">#&gt;</span> <span class="warning">Warning: </span>Removed 2 rows containing missing values or values outside the scale range</span>
-<span class="r-wrn co"><span class="r-pr">#&gt;</span> (`geom_point()`).</span>
-<span class="r-wrn co"><span class="r-pr">#&gt;</span> <span class="warning">Warning: </span>Removed 2 rows containing missing values or values outside the scale range</span>
-<span class="r-wrn co"><span class="r-pr">#&gt;</span> (`geom_point()`).</span>
-<span class="r-wrn co"><span class="r-pr">#&gt;</span> <span class="warning">Warning: </span>Removed 2 rows containing missing values or values outside the scale range</span>
-<span class="r-wrn co"><span class="r-pr">#&gt;</span> (`geom_point()`).</span>
-<span class="r-wrn co"><span class="r-pr">#&gt;</span> <span class="warning">Warning: </span>Removed 2 rows containing missing values or values outside the scale range</span>
-<span class="r-wrn co"><span class="r-pr">#&gt;</span> (`geom_point()`).</span>
-<span class="r-wrn co"><span class="r-pr">#&gt;</span> <span class="warning">Warning: </span>Removed 4 rows containing missing values or values outside the scale range</span>
-<span class="r-wrn co"><span class="r-pr">#&gt;</span> (`geom_point()`).</span>
-<span class="r-wrn co"><span class="r-pr">#&gt;</span> <span class="warning">Warning: </span>Removed 2 rows containing missing values or values outside the scale range</span>
-<span class="r-wrn co"><span class="r-pr">#&gt;</span> (`geom_point()`).</span>
-<span class="r-wrn co"><span class="r-pr">#&gt;</span> <span class="warning">Warning: </span>Removed 4 rows containing missing values or values outside the scale range</span>
-<span class="r-wrn co"><span class="r-pr">#&gt;</span> (`geom_point()`).</span>
-<span class="r-wrn co"><span class="r-pr">#&gt;</span> <span class="warning">Warning: </span>Removed 2 rows containing missing values or values outside the scale range</span>
-<span class="r-wrn co"><span class="r-pr">#&gt;</span> (`geom_point()`).</span>
-<span class="r-wrn co"><span class="r-pr">#&gt;</span> <span class="warning">Warning: </span>Removed 3 rows containing missing values or values outside the scale range</span>
-<span class="r-wrn co"><span class="r-pr">#&gt;</span> (`geom_point()`).</span>
-<span class="r-wrn co"><span class="r-pr">#&gt;</span> <span class="warning">Warning: </span>Removed 2 rows containing missing values or values outside the scale range</span>
-<span class="r-wrn co"><span class="r-pr">#&gt;</span> (`geom_point()`).</span>
-<span class="r-wrn co"><span class="r-pr">#&gt;</span> <span class="warning">Warning: </span>Removed 3 rows containing missing values or values outside the scale range</span>
-<span class="r-wrn co"><span class="r-pr">#&gt;</span> (`geom_point()`).</span>
-<span class="r-wrn co"><span class="r-pr">#&gt;</span> <span class="warning">Warning: </span>Removed 2 rows containing missing values or values outside the scale range</span>
-<span class="r-wrn co"><span class="r-pr">#&gt;</span> (`geom_point()`).</span>
-<span class="r-wrn co"><span class="r-pr">#&gt;</span> <span class="warning">Warning: </span>Removed 5 rows containing missing values or values outside the scale range</span>
-<span class="r-wrn co"><span class="r-pr">#&gt;</span> (`geom_point()`).</span>
-<span class="r-wrn co"><span class="r-pr">#&gt;</span> <span class="warning">Warning: </span>Removed 2 rows containing missing values or values outside the scale range</span>
-<span class="r-wrn co"><span class="r-pr">#&gt;</span> (`geom_point()`).</span>
-<span class="r-wrn co"><span class="r-pr">#&gt;</span> <span class="warning">Warning: </span>Removed 5 rows containing missing values or values outside the scale range</span>
-<span class="r-wrn co"><span class="r-pr">#&gt;</span> (`geom_point()`).</span>
-<span class="r-wrn co"><span class="r-pr">#&gt;</span> <span class="warning">Warning: </span>Removed 2 rows containing missing values or values outside the scale range</span>
-<span class="r-wrn co"><span class="r-pr">#&gt;</span> (`geom_point()`).</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> Plots saved to /tmp/Rtmps2DQ6W/chlorofluoro_plot_1.pdf</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> Returned data</span>
+<span class="r-err co"><span class="r-pr">#&gt;</span> <span class="error">Error in computeFvFm_PSII(CF_demodata, plate_names, layout, smartsheet,     copynumber, output_location, version = 3):</span> unused argument (version = 3)</span>
 <span class="r-in"><span></span></span>
 </code></pre></div>
     </div>
