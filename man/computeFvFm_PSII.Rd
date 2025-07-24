@@ -73,6 +73,6 @@ smartsheet <- selection_results
 output_location <-  tempdir()
 
 step_one <- computeFvFm_PSII(CF_demodata,plate_names,layout,smartsheet ,
-copynumber,output_location, version =3)
+copynumber,output_location)
 
 }

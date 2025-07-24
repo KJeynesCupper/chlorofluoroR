@@ -28,7 +28,8 @@ Imports:
     viridis, 
     grDevices,
     ggrepel,
-    grid
+    grid,
+    ggpubr
 biocViews: 
     Visualization,
     Preprocessing

@@ -143,13 +143,13 @@ custom_reds   <- c("#8B0000",
     val <- names(list_of_dfs[i])
 
     plant_colours <- plate_fvfm %>%
-      dplyr::distinct(Plant_ID, colour) %>%
-      dplyr::group_by(colour) %>%
+      dplyr::distinct(Plant_ID, Selection) %>%
+      dplyr::group_by(Selection) %>%
       dplyr::mutate(col_index = row_number()) %>%
       dplyr::ungroup() %>%
       dplyr::mutate(color_value = case_when(
-        colour == "green" ~ custom_greens[col_index],
-        colour == "red" ~ custom_reds[col_index]
+        Selection == "pass" ~ custom_greens[col_index],
+        Selection == "fail" ~ custom_reds[col_index]
       )) %>%
       dplyr::select(Plant_ID, color_value)
 
@@ -267,7 +267,9 @@ custom_reds   <- c("#8B0000",
 
 
 
-.function6 <- function(list_of_dfs, colour_palette, label_size){
+.function6 <- function(list_of_dfs,
+                       colour_palette,
+                       label_size){
   store_plots <- list()
 
   for (i in 1:length(list_of_dfs)) {
@@ -328,7 +330,7 @@ custom_reds   <- c("#8B0000",
       ggplot2::scale_linetype_manual(values = c("pass" = "solid", "fail" = "dashed"))+
       ggplot2::theme(legend.box = "vertical", legend.key.width = grid::unit(1, "cm"))+
       ggrepel::geom_text_repel(data = plate_fvfm_labels,
-                               ggplot2::aes(label = Plant_ID),size = label_size,
+                               ggplot2::aes(label = Plant_ID), size = label_size,
                                show.legend = FALSE, nudge_x = 7)
 
 
@@ -527,28 +529,28 @@ custom_reds   <- c("#8B0000",
                           shape = NA, size = NA, inherit.aes = FALSE, show.legend = TRUE) +
 
       ggplot2::scale_fill_manual(name = "Copy No.", values = colour_palette,
-                                 guide = guide_legend(override.aes = list(shape = 21, size = 4))) +
+                                 guide = ggplot2::guide_legend(override.aes = list(shape = 21, size = 4))) +
       ggplot2::geom_point(data = basta_legend_df,
                           ggplot2::aes(x = Inf, y = Inf, alpha = Selection),
                           shape = NA, size = NA, inherit.aes = FALSE, show.legend = TRUE) +
 
       ggplot2::scale_alpha_manual(name = "Selection screen",
                                   values = c("pass" = 1, "fail" = 1),  # different alpha just to trick legend
-                                  guide = guide_legend(override.aes = list(
+                                  guide = ggplot2::guide_legend(override.aes = list(
                                     shape = shape_values,
                                     linetype = linetype_values,
                                     color = "black",
                                     size = 3))) +
-      ggplot2::guides(color = guide_legend(title = "Plant_ID",
+      ggplot2::guides(color = ggplot2::guide_legend(title = "Plant_ID",
                                            override.aes = list(
                                              color = unname(plant_id_colors),
                                              shape = 16, linetype = "solid"), ncol = 2, order = 1),
-                      linetype = guide_legend(title = "Plant_ID",ncol = 2, order = 1),
-                      shape = guide_legend(title = "Plant_ID", ncol = 2, order = 1))+
+                      linetype = ggplot2::guide_legend(title = "Plant_ID",ncol = 2, order = 1),
+                      shape = ggplot2::guide_legend(title = "Plant_ID", ncol = 2, order = 1))+
       ggplot2::labs(x = "Time (min)", y = "PSII",title = paste0(val, " PSII"))+
-    theme_bw()+
+      ggplot2::theme_bw()+
       plotTheme+
-      theme(legend.box = "verticle")
+      ggplot2::theme(legend.box = "verticle")
 
 
     store_plots <- append(store_plots, list(p1, p2))

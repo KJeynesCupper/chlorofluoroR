@@ -49,7 +49,7 @@
 #' output_location <-  tempdir()
 #'
 #' step_one <- computeFvFm_PSII(CF_demodata,plate_names,layout,smartsheet ,
-#' copynumber,output_location, version =3)
+#' copynumber,output_location)
 #'
 #' @export
 #' @import openxlsx
@@ -60,6 +60,7 @@
 #' @import viridis
 #' @import utils
 #' @import grid
+#' @import ggpubr
 computeFvFm_PSII <- function(data,
                                 plate_names,
                                 layout,
@@ -90,7 +91,7 @@ computeFvFm_PSII <- function(data,
 
     plots2 <- .function6(out1, colour_palette, label_size)
 
-    plots3 <- .function7(out1)
+    plots3 <- .function7(out1, colour_palette)
 
   }else {
     # Create an empty list to store the results
@@ -116,7 +117,7 @@ computeFvFm_PSII <- function(data,
 
     plots2 <- .function6(out1, colour_palette, label_size)
 
-    plots3 <- .function7(out1)
+    plots3 <- .function7(out1, colour_palette)
 
     # plots <- switch(as.character(version),
     #                 "1" = .function2(out1),

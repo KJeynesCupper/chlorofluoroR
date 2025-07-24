@@ -156,8 +156,7 @@ step_one <- computeFvFm_PSII(CF_demodata,
                               layout, 
                               smartsheet,
                               copynumber,
-                              output_location, 
-                              version =3 )
+                              output_location )
 ```
 This will return a list of dataframes, where each plates has a dataframe for
 FvFm and PSII. And saves an excel file containing all data 
@@ -167,7 +166,7 @@ each plant sample. The colour of each sample is determined by the BASTA selectio
 results, where green represents positive (ie. resistant) and red represents 
 negative (ie. not resistant). The line type is determined by the copy number 
 
-There are four different versions of this plot:
+There are three different versions of this plot:
 - Version 1 = coloured based on selection result, and linetype represents
 copy number.
 
@@ -177,7 +176,6 @@ selection result with each plant labeled within the plot
 - Version 3 = coloured based on copy number, and linetype/shape represents
 selection result with each line labeled via the legend.
 
-- Version 4 = Grouping plants based on copy number.
 <br>
 
 ## 2. Subset for specific combinations
