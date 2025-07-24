@@ -256,8 +256,8 @@ summarise_FvFmPSII <- function(data,copynumber,
 
 
   grDevices::pdf(file.path(output_location, "chlorofluoro_plot_3.pdf"), width= width, height = height )
-  ggarrange(plotlist=store_plots2, ncol = 2, nrow = 4,  common.legend = T, legend.grob = legend,
-            legend = "right")
+  print(ggarrange(plotlist=store_plots2, ncol = 2, nrow = 4,  common.legend = T, legend.grob = legend,
+            legend = "right"))
   grDevices::dev.off()
 }
 
