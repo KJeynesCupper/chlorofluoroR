@@ -116,7 +116,7 @@ computeFvFm_PSII <- function(data,
   # save plots
   big_plot <- patchwork::wrap_plots(plots, ncol = 2) # choose number of columns
 
-  pdf(file.path(output_location, "chlorofluoro_plot.pdf"), width= width, height = height)
+  pdf(file.path(output_location, "chlorofluoro_plot_1.pdf"), width= width, height = height)
   print(big_plot)
 
   dev.off()

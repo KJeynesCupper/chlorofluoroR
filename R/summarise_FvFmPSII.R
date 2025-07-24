@@ -43,15 +43,14 @@
 #' @import grDevices
 
 
-
 summarise_FvFmPSII <- function(data,
-                                   output_location,
-                                   width= 25,
-                                   height = 25){
+                               output_location,
+                               width= 25,
+                               height = 25){
 
-  if (.function5(data)){ # for a  nested list
+  if (.function5(data) == TRUE){ # for a  nested list
 
-    out_summary <- mapply(.function4,data, SIMPLIFY = FALSE)
+    out_summary <- mapply(.function4, data, SIMPLIFY = FALSE)
     # save data
     .function3(out_summary, file.path(output_location, "chlorofluoro_dataset_3.xlsx"))
     message("Data saved to ", file.path(output_location, "chlorofluoro_dataset_3.xlsx"))
@@ -65,12 +64,12 @@ summarise_FvFmPSII <- function(data,
       val <- names(out_summary[i])
 
       plant_colours <- plate_fvfm %>%
-        dplyr::group_by(colour) %>%
+        dplyr::group_by(Selection) %>%
         dplyr::mutate(col_index = row_number()) %>%
         dplyr::ungroup() %>%
         dplyr::mutate(color_value = case_when(
-          colour == "green" ~ custom_greens[col_index],
-          colour == "red" ~ custom_reds[col_index]
+          Selection == "pass" ~ custom_greens[col_index],
+          Selection == "fail" ~ custom_reds[col_index]
         )) %>%
         dplyr::select(Plant_ID, color_value)
 

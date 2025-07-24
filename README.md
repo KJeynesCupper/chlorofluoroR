@@ -130,7 +130,8 @@ with a copy number value of 4 and BASTA positive (ie. resistant).
 
 ``` r
 data("step_one")
-step_two <- subset_FvFmPSII(step_one, output_location)
+step_two <- subset_FvFmPSII(step_one, output_location, copyNumber = 4,
+  BASTA = "positive")
 
 
 ```

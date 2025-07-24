@@ -190,7 +190,7 @@ custom_reds   <- c("#8B0000",
 
   # basta
   selection <- fvfm %>%
-    select(Plant_ID, colour)%>%
+    dplyr::select(Plant_ID, Selection)%>%
     distinct()
 
   #fvfm >> Calculate means and sd and count technical reps
@@ -472,12 +472,12 @@ custom_reds   <- c("#8B0000",
                                     linetype = linetype_values,
                                     color = "black",
                                     size = 3))) +
-      ggplot2::guides(color = guide_legend(title = "Plant_ID",
+      ggplot2::guides(color = ggplot2::guide_legend(title = "Plant_ID",
                                            override.aes = list(
                                              color = unname(plant_id_colors),
                                              shape = 16, linetype = "solid"), ncol = 2, order = 1),
-                      linetype = guide_legend(title = "Plant_ID",ncol = 2, order = 1),
-                      shape = guide_legend(title = "Plant_ID", ncol = 2, order = 1))+
+                      linetype = ggplot2::guide_legend(title = "Plant_ID",ncol = 2, order = 1),
+                      shape = ggplot2::guide_legend(title = "Plant_ID", ncol = 2, order = 1))+
       ggplot2::labs(x = "Time (min)", y = "Fv/Fm",title = paste0(val, " FvFm"))+
     theme_bw()+
       plotTheme+

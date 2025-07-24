@@ -44,15 +44,15 @@
 #' @importFrom dplyr bind_rows
 
 subset_FvFmPSII <- function(data,output_location,
-                               copyNumber = 4,
-                               BASTA = "positive",
-                               width= 15,
-                               height = 5){
+                            copyNumber = 4,
+                            BASTA = "positive",
+                            width= 15,
+                            height = 5){
 
   if(BASTA =="positive"){
-    basta_result <- "green"
+    basta_result <- "pass"
   }else{
-    basta_result <- "red"
+    basta_result <- "fail"
   }
 
 
@@ -62,7 +62,7 @@ subset_FvFmPSII <- function(data,output_location,
     filtered_df <- lapply(data, function(x) {
       lapply(x, function(df) {
         dplyr::filter(df, BAR_copy == copyNumber,
-                      colour == basta_result)
+                      Selection == basta_result)
       })
     })
 
@@ -80,7 +80,7 @@ subset_FvFmPSII <- function(data,output_location,
   } else{ # working with single plate
     filtered_df <-  lapply(data, function(x) {
       dplyr::filter(x, BAR_copy == copyNumber,
-                    colour == basta_result)
+                    Selection == basta_result)
     })
     combined_FvFm <- filtered_df$FvFm
     combined_PSII <- filtered_df$PSII
@@ -91,7 +91,7 @@ subset_FvFmPSII <- function(data,output_location,
     ggplot2::stat_summary(fun = mean, geom = "line",linewidth = 1.2 ) +
     ggplot2::stat_summary(fun.data = mean_se, geom = "errorbar", width = 1, linewidth = 1) +
     ggplot2::labs(x = "Time (min)", y = "Fv/Fm", title =paste0(copyNumber, " Copy Plants:FvFm"),
-         linetype="Copy number", colour="Plant ID") +
+                  linetype="Copy number", colour="Plant ID") +
     ggplot2::theme_bw() +
     plotTheme
 
@@ -99,7 +99,7 @@ subset_FvFmPSII <- function(data,output_location,
     ggplot2::stat_summary(fun = mean, geom = "line", linewidth =1.2 ) +
     ggplot2::stat_summary(fun.data = mean_se, geom = "errorbar", width = 2, linewidth = 1 ) +
     ggplot2::labs(x = "Time (min)", y = "PSII", title =paste0(copyNumber, " Copy Plants:PSII"),
-         linetype="Copy number", colour="Plant ID") +
+                  linetype="Copy number", colour="Plant ID") +
     ggplot2::theme_bw() +
     plotTheme
 
@@ -118,3 +118,4 @@ subset_FvFmPSII <- function(data,output_location,
   message("Data saved to ", file.path(output_location, "chlorofluoro_dataset_2.xlsx"))
 
 }
+
