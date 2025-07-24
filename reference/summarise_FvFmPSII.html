@@ -46,7 +46,14 @@ As before, the colour is determined by the BASTA selection result.</p>
 
     <div class="section level2">
     <h2 id="ref-usage">Usage<a class="anchor" aria-label="anchor" href="#ref-usage"></a></h2>
-    <div class="sourceCode"><pre class="sourceCode r"><code><span><span class="fu">summarise_FvFmPSII</span><span class="op">(</span><span class="va">data</span>, <span class="va">output_location</span>, width <span class="op">=</span> <span class="fl">25</span>, height <span class="op">=</span> <span class="fl">25</span><span class="op">)</span></span></code></pre></div>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span><span class="fu">summarise_FvFmPSII</span><span class="op">(</span></span>
+<span>  <span class="va">data</span>,</span>
+<span>  <span class="va">copynumber</span>,</span>
+<span>  <span class="va">output_location</span>,</span>
+<span>  colour_palette <span class="op">=</span> <span class="cn">NULL</span>,</span>
+<span>  width <span class="op">=</span> <span class="fl">25</span>,</span>
+<span>  height <span class="op">=</span> <span class="fl">25</span></span>
+<span><span class="op">)</span></span></code></pre></div>
     </div>
 
     <div class="section level2">
@@ -58,8 +65,17 @@ As before, the colour is determined by the BASTA selection result.</p>
 computeFvFm_PSII<code><a href="computeFvFm_PSII.html">computeFvFm_PSII()</a></code></p></dd>
 
 
+<dt id="arg-copynumber">copynumber<a class="anchor" aria-label="anchor" href="#arg-copynumber"></a></dt>
+<dd><p>data.frame; copy number results.</p></dd>
+
+
 <dt id="arg-output-location">output_location<a class="anchor" aria-label="anchor" href="#arg-output-location"></a></dt>
 <dd><p>path; location to save output files</p></dd>
+
+
+<dt id="arg-colour-palette">colour_palette<a class="anchor" aria-label="anchor" href="#arg-colour-palette"></a></dt>
+<dd><p>character; colour palette for ggplot. Default is NULL,
+when used plots use packages default green palette (n=19).</p></dd>
 
 
 <dt id="arg-width">width<a class="anchor" aria-label="anchor" href="#arg-width"></a></dt>
@@ -81,9 +97,9 @@ computeFvFm_PSII<code><a href="computeFvFm_PSII.html">computeFvFm_PSII()</a></co
     <h2 id="ref-examples">Examples<a class="anchor" aria-label="anchor" href="#ref-examples"></a></h2>
     <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span><span class="fu"><a href="https://rdrr.io/r/utils/data.html" class="external-link">data</a></span><span class="op">(</span><span class="st">"step_one"</span><span class="op">)</span></span></span>
 <span class="r-in"><span><span class="fu"><a href="https://rdrr.io/r/utils/data.html" class="external-link">data</a></span><span class="op">(</span><span class="st">"selection_results"</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="fu"><a href="https://rdrr.io/r/utils/data.html" class="external-link">data</a></span><span class="op">(</span><span class="st">"copynumber"</span><span class="op">)</span></span></span>
 <span class="r-in"><span><span class="va">output_location</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/tempfile.html" class="external-link">tempdir</a></span><span class="op">(</span><span class="op">)</span></span></span>
-<span class="r-in"><span><span class="va">output_location</span> <span class="op">&lt;-</span> <span class="st">"/Users/kejc/"</span></span></span>
-<span class="r-in"><span><span class="va">step_three</span> <span class="op">&lt;-</span> <span class="fu">summarise_FvFmPSII</span><span class="op">(</span><span class="va">step_one</span>, <span class="va">output_location</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="va">step_three</span> <span class="op">&lt;-</span> <span class="fu">summarise_FvFmPSII</span><span class="op">(</span><span class="va">step_one</span>, <span class="va">copynumber</span>, <span class="va">output_location</span><span class="op">)</span></span></span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> Joining with `by = join_by(Plant_ID)`</span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> Joining with `by = join_by(Plant_ID)`</span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> Joining with `by = join_by(Plant_ID)`</span>
@@ -92,9 +108,7 @@ computeFvFm_PSII<code><a href="computeFvFm_PSII.html">computeFvFm_PSII()</a></co
 <span class="r-msg co"><span class="r-pr">#&gt;</span> Joining with `by = join_by(Plant_ID)`</span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> Joining with `by = join_by(Plant_ID)`</span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> Joining with `by = join_by(Plant_ID)`</span>
-<span class="r-wrn co"><span class="r-pr">#&gt;</span> <span class="warning">Warning: </span>cannot create file '/Users/kejc//chlorofluoro_dataset_3.xlsx', reason 'No such file or directory'</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> Data saved to /Users/kejc//chlorofluoro_dataset_3.xlsx</span>
-<span class="r-err co"><span class="r-pr">#&gt;</span> <span class="error">Error in grDevices::pdf(file.path(output_location, "chlorofluoro_plot_3.pdf"),     width = width, height = height):</span> cannot open file '/Users/kejc//chlorofluoro_plot_3.pdf'</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> Data saved to /tmp/RtmpZ3MA1z/chlorofluoro_dataset_3.xlsx</span>
 <span class="r-in"><span></span></span>
 </code></pre></div>
     </div>
