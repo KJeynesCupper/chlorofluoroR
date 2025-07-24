@@ -178,7 +178,7 @@ selection result with each line labeled via the legend.
 
 <br>
 
-## 2. Subset for specific combinations
+## 3. Subset for specific combinations
 
 We want to use this data to help us select for lines to carry to T2. So, here
 we will filter for these desired traits. For example, we will select for those
@@ -197,17 +197,18 @@ function. See output as files "chlorofluoro_plot_2.pdf" and
 <br>
 
 
-## 3. Summarise the FvFm and PSII values for each plant line. 
+## 4. Summarise the FvFm and PSII values for each plant line. 
 Instead of looking at the distribution of the FvFm or PSII over multiple light
 pulses across time, we can calculate a mean. Here we plot the mean for these 
-variables as a bar plot with error bars representing SD. As before, the colour 
-is determined by the BASTA selection result. Output is also saved as an excel 
+variables as a bar plot with error bars representing SD. Here, the colour 
+is determined by the copy number and the bar outline is 
+determined by the BASTA selection screen. Output is also saved as an excel 
 document (one sheet per plate and variable). See output as files 
 "chlorofluoro_plot_3.pdf" and "chlorofluoro_dataset_3.xlsx"
 
 ``` r
 data("step_one")
-step_three <- summarise_FvFmPSII(step_one, output_location)
+step_three <- summarise_FvFmPSII(step_one, copynumber, output_location)
 
 ```
 
