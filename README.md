@@ -108,7 +108,8 @@ step_one <- computeFvFm_PSII(CF_demodata,
                               layout, 
                               smartsheet,
                               copynumber,
-                              output_location)
+                              output_location, 
+                              version =3 )
 ```
 This will return a list of dataframes, where each plates has a dataframe for
 FvFm and PSII. And saves an excel file containing all data 
@@ -129,7 +130,7 @@ with a copy number value of 4 and BASTA positive (ie. resistant).
 
 ``` r
 data("step_one")
-step_two <- subset_chlorofluoro(step_one, output_location)
+step_two <- subset_FvFmPSII(step_one, output_location)
 
 
 ```
@@ -149,7 +150,7 @@ document (one sheet per plate and variable). See output as files
 
 ``` r
 data("step_one")
-step_three <- summarise_chlorofluoro(step_one, output_location)
+step_three <- summarise_FvFmPSII(step_one, output_location)
 
 ```
 

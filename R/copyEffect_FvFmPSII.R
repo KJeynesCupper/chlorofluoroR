@@ -1,4 +1,4 @@
-#' Compute distribution of FvFm and PSII.
+#' Copy number effect
 #'
 #' @description Organises the raw data output for 1 or more plates and plots the
 #' distribution.
@@ -34,7 +34,6 @@
 #'@param colour_palette character; colour palette for ggplot. Default is Null,
 #'when used plots use packages default green palette (n=19).
 #'
-#'
 #' @return Returns a list of dataframes, where each plates has a dataframe for
 #' FvFm and PSII. Saves an excel file containing all data and a plot for
 #' FvFm and PSII.
@@ -59,17 +58,16 @@
 #' @import ggplot2
 #' @import ggrepel
 #' @import viridis
-#' @import utils
-computeFvFm_PSII <- function(data,
-                                plate_names,
-                                layout,
-                                smartsheet,
-                                copynumber,
-                                output_location,
+copyEffect_FvFmPSII <- function(data,
+                             plate_names,
+                             layout,
+                             smartsheet,
+                             copynumber,
+                             output_location,
                              colour_palette = NULL,
                              version = 1,
-                                width= 20,
-                                height = 25){
+                             width= 20,
+                             height = 25){
 
   if(is.data.frame(data)){
     out1 <- .function1(data,

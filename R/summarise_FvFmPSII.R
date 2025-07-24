@@ -21,7 +21,7 @@
 #' data("selection_results")
 #' output_location <- tempdir()
 #' output_location <- "/Users/kejc/"
-#' step_three <- summarise_chlorofluoro(step_one, output_location)
+#' step_three <- summarise_FvFmPSII(step_one, output_location)
 #'
 #' @export
 #' @importFrom dplyr %>%
@@ -40,10 +40,11 @@
 #' @importFrom ggplot2 stat_summary
 #' @importFrom patchwork wrap_plots
 #' @importFrom ggplot2 mean_se
+#' @import grDevices
 
 
 
-summarise_chlorofluoro <- function(data,
+summarise_FvFmPSII <- function(data,
                                    output_location,
                                    width= 25,
                                    height = 25){
@@ -112,7 +113,7 @@ summarise_chlorofluoro <- function(data,
     }
 
   } else {
-    out_summary <- .function4(data, smartsheet)
+    out_summary <- .function4(data)
     # save data
     .function3(out_summary, file.path(output_location, "chlorofluoro_dataset_3.xlsx"))
     message("Data saved to ", file.path(output_location, "chlorofluoro_dataset_3.xlsx"))
@@ -170,7 +171,7 @@ summarise_chlorofluoro <- function(data,
 
   #save
   big_plot2 <- patchwork::wrap_plots(store_plots2, ncol = 2) # choose number of columns
-  pdf(file.path(output_location, "chlorofluoro_plot_3.pdf"), width= width, height = height)
+  grDevices::pdf(file.path(output_location, "chlorofluoro_plot_3.pdf"), width= width, height = height)
   print(big_plot2)
-  dev.off()
+  grDevices::dev.off()
 }

@@ -1,4 +1,4 @@
-#' ubset for specific combinations
+#' subset for specific combinations
 #'
 #' @description We want to use this data to help us select for lines to carry to
 #' T2. So, here we will filter for these desired traits. For example, we will
@@ -21,7 +21,7 @@
 #' @examples
 #' data("step_one")
 #' output_location <- tempdir()
-#' step_two <- subset_chlorofluoro(step_one, output_location )
+#' step_two <- subset_FvFmPSII(step_one, output_location )
 #'
 #'
 #' @export
@@ -43,7 +43,7 @@
 #' @importFrom ggplot2 mean_se
 #' @importFrom dplyr bind_rows
 
-subset_chlorofluoro <- function(data,output_location,
+subset_FvFmPSII <- function(data,output_location,
                                copyNumber = 4,
                                BASTA = "positive",
                                width= 15,

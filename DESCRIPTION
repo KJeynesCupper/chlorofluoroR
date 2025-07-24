@@ -9,8 +9,6 @@ Description: Data processing and plotting of FvFm and PSII.
 License: MIT + file LICENSE
 Depends:
     R (>= 4.3.0)
-VignetteBuilder:
-    knitr
 Encoding: UTF-8
 LazyData: FALSE
 Roxygen: list(markdown = TRUE)
@@ -23,12 +21,13 @@ Imports:
     dplyr,
     tidyr, 
     ggplot2, 
-    reshape2,
     openxlsx,
     patchwork,
-    grDevices,
     utils,
-    stats
+    stats,
+    viridis, 
+    grDevices,
+    ggrepel
 biocViews: 
     Visualization,
     Preprocessing
