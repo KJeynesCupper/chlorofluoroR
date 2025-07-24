@@ -50,7 +50,8 @@ distribution.</p>
 <span>  colour_palette <span class="op">=</span> <span class="cn">NULL</span>,</span>
 <span>  version <span class="op">=</span> <span class="fl">1</span>,</span>
 <span>  width <span class="op">=</span> <span class="fl">20</span>,</span>
-<span>  height <span class="op">=</span> <span class="fl">25</span></span>
+<span>  height <span class="op">=</span> <span class="fl">25</span>,</span>
+<span>  label_size <span class="op">=</span> <span class="fl">5</span></span>
 <span><span class="op">)</span></span></code></pre></div>
     </div>
 
@@ -96,8 +97,7 @@ copy number.
 Version 2 = coloured based on copy number, and linetype represents
 selection result with each plant labeled within the plot</p>
 <p>Version 3 = coloured based on copy number, and linetype/shape represents
-selection result with each line labeled via the legend.</p>
-<p>Version 4 = Grouping plants based on copy number.</p></dd>
+selection result with each line labeled via the legend.</p></dd>
 
 
 <dt id="arg-width">width<a class="anchor" aria-label="anchor" href="#arg-width"></a></dt>
@@ -106,6 +106,10 @@ selection result with each line labeled via the legend.</p>
 
 <dt id="arg-height">height<a class="anchor" aria-label="anchor" href="#arg-height"></a></dt>
 <dd><p>numeric;pdf height size. deafult is 21.</p></dd>
+
+
+<dt id="arg-label-size">label_size<a class="anchor" aria-label="anchor" href="#arg-label-size"></a></dt>
+<dd><p>numeric; size of text label annotations for plant IDs.</p></dd>
 
 </dl></div>
     <div class="section level2">
@@ -133,8 +137,8 @@ directory.</p>
 <span class="r-in"><span><span class="va">output_location</span> <span class="op">&lt;-</span>  <span class="fu"><a href="https://rdrr.io/r/base/tempfile.html" class="external-link">tempdir</a></span><span class="op">(</span><span class="op">)</span></span></span>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="va">step_one</span> <span class="op">&lt;-</span> <span class="fu">computeFvFm_PSII</span><span class="op">(</span><span class="va">CF_demodata</span>,<span class="va">plate_names</span>,<span class="va">layout</span>,<span class="va">smartsheet</span> ,</span></span>
-<span class="r-in"><span><span class="va">copynumber</span>,<span class="va">output_location</span>, version <span class="op">=</span><span class="fl">4</span> <span class="op">)</span></span></span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> Data saved to /tmp/RtmpEQGn9N/chlorofluoro_dataset_1.xlsx</span>
+<span class="r-in"><span><span class="va">copynumber</span>,<span class="va">output_location</span>, version <span class="op">=</span><span class="fl">3</span><span class="op">)</span></span></span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> Data saved to /tmp/Rtmps2DQ6W/chlorofluoro_dataset_1.xlsx</span>
 <span class="r-wrn co"><span class="r-pr">#&gt;</span> <span class="warning">Warning: </span>Removed 2 rows containing missing values or values outside the scale range</span>
 <span class="r-wrn co"><span class="r-pr">#&gt;</span> (`geom_point()`).</span>
 <span class="r-wrn co"><span class="r-pr">#&gt;</span> <span class="warning">Warning: </span>Removed 2 rows containing missing values or values outside the scale range</span>
@@ -167,7 +171,7 @@ directory.</p>
 <span class="r-wrn co"><span class="r-pr">#&gt;</span> (`geom_point()`).</span>
 <span class="r-wrn co"><span class="r-pr">#&gt;</span> <span class="warning">Warning: </span>Removed 2 rows containing missing values or values outside the scale range</span>
 <span class="r-wrn co"><span class="r-pr">#&gt;</span> (`geom_point()`).</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> Plots saved to /tmp/RtmpEQGn9N/chlorofluoro_plot_1.pdf</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> Plots saved to /tmp/Rtmps2DQ6W/chlorofluoro_plot_1.pdf</span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> Returned data</span>
 <span class="r-in"><span></span></span>
 </code></pre></div>
