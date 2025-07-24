@@ -82,7 +82,7 @@ First we must load our:
 - Data from FluorCam software (frames-numeric)
 - BASTA selection
 
-DO NOT RUN THIS CODE
+This the demo data:
 ```r 
 data("CF_demodata")
 data("layout")
@@ -95,6 +95,54 @@ smartsheet = selection_results
 
 ```
 <br>
+
+You can organise the data for input using this code:
+```r 
+
+# Read plate layouts
+Plate1layout <- readxl::read_xlsx("./data_plate_layout.xlsx", sheet = "Plate1")%>%
+  dplyr::rename(Plant_ID = `Plant ID`, Construct_ID = `Construct ID` )
+Plate2layout <- readxl::read_xlsx("./data_plate_layout.xlsx", sheet = "Plate2")%>%
+  dplyr::rename(Plant_ID = `Plant ID`, Construct_ID = `Construct ID` )
+Plate3layout <- readxl::read_xlsx("./data_plate_layout.xlsx", sheet = "Plate3")%>%
+  dplyr::rename(Plant_ID = `Plant ID`, Construct_ID = `Construct ID` )
+Plate4layout <- readxl::read_xlsx("./data_plate_layout.xlsx", sheet = "Plate4")%>%
+  dplyr::rename(Plant_ID = `Plant ID`, Construct_ID = `Construct ID` )
+
+
+layout_list <- list(Plate1 = Plate1layout,
+                    Plate2 = Plate2layout,
+                    Plate3 = Plate3layout,
+                    Plate4 = Plate4layout)
+
+# state output location:
+output_location = "../4_analysis_chlorofluoro/"
+
+
+# load data file of interest from CF imager
+Plate1 <- read.table("250528-DC33-Plate1-a1-frames-numeric.TXT", sep = "\t", skip = 2, header = TRUE)
+Plate2 <- read.table("250528-DC33-Plate2-a1-frames-numeric.TXT", sep = "\t", skip = 2, header = TRUE)
+Plate3 <- read.table("250528-DC33-Plate3-a1-frames-numeric.TXT", sep = "\t", skip = 2, header = TRUE)
+Plate4 <- read.table("250528-DC33-Plate4-a1-frames-numeric.TXT", sep = "\t", skip = 2, header = TRUE)
+
+data<- list(Plate1 = Plate1,
+                          Plate2 = Plate2,
+                          Plate3 = Plate3,
+                          Plate4 = Plate4)
+
+
+# add colours based on basta result::
+smartsheets <- readxl::read_xlsx("../DC33_T1_lines_smartsheets.xlsx")
+smartsheets_mod <-  as.data.frame(smartsheets) %>%
+  dplyr::select(Plant_ID= `Plant ID`, `BASTA result`)
+
+# load copy number data 
+copynumber <- readxl::read_xlsx("./Copynumberfile_Results.xlsx")
+
+
+```
+You can find file template in the folder "Templates"
+
 
 ## 2. Computing the FvFm and PSII distribution
 
@@ -119,7 +167,17 @@ each plant sample. The colour of each sample is determined by the BASTA selectio
 results, where green represents positive (ie. resistant) and red represents 
 negative (ie. not resistant). The line type is determined by the copy number 
 
+There are four different versions of this plot:
+- Version 1 = coloured based on selection result, and linetype represents
+copy number.
 
+- Version 2 = coloured based on copy number, and linetype represents
+selection result with each plant labeled within the plot
+
+- Version 3 = coloured based on copy number, and linetype/shape represents
+selection result with each line labeled via the legend.
+
+- Version 4 = Grouping plants based on copy number.
 <br>
 
 ## 2. Subset for specific combinations
