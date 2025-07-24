@@ -19,15 +19,6 @@
 #'@param output_location path; location to save output files
 #'@param width numeric; pdf width size. deafult is 20.
 #'@param height numeric;pdf height size. deafult is 21.
-#'@param version numeric; version of plot, choose from 1, 2, and 3. Each returns
-#'a slightly different way to plot the data.
-#'Version 1 = coloured based on selection result, and linetype represents
-#'copy number.
-#'Version 2 = coloured based on copy number, and linetype represents
-#'selection result with each plant labeled within the plot
-#'
-#'Version 3 = coloured based on copy number, and linetype/shape represents
-#'selection result with each line labeled via the legend.
 #'
 #'
 #'@param colour_palette character; colour palette for ggplot. Default is Null,
@@ -38,6 +29,14 @@
 #' @return Returns a list of dataframes, where each plates has a dataframe for
 #' FvFm and PSII. Saves an excel file containing all data and a plot for
 #' FvFm and PSII.
+#'
+#'Version 1 = coloured based on selection result, and linetype represents
+#'copy number.
+#'Version 2 = coloured based on copy number, and linetype represents
+#'selection result with each plant labeled within the plot
+#'
+#'Version 3 = coloured based on copy number, and linetype/shape represents
+#'selection result with each line labeled via the legend.
 #'
 #' @examples
 #' data("CF_demodata")
@@ -68,7 +67,6 @@ computeFvFm_PSII <- function(data,
                                 copynumber,
                                 output_location,
                              colour_palette = NULL,
-                             version = 1,
                                 width= 20,
                                 height = 25,
                              label_size = 5){
@@ -88,10 +86,11 @@ computeFvFm_PSII <- function(data,
     message("Data saved to ", file.path(output_location,
                                         "chlorofluoro_dataset_1.xlsx"))
 
-    plots <- switch(as.character(version),
-                    "1" = .function2(out1),
-                    "2" = .function6(out1, colour_palette),
-                    .function7(out1))
+    plots1 <- .function2(out1)
+
+    plots2 <- .function6(out1, colour_palette, label_size)
+
+    plots3 <- .function7(out1)
 
   }else {
     # Create an empty list to store the results
@@ -113,19 +112,36 @@ computeFvFm_PSII <- function(data,
                                         "chlorofluoro_dataset_1.xlsx"))
 
     # plot!
-    plots <- switch(as.character(version),
-                    "1" = .function2(out1),
-                    "2" = .function6(out1, colour_palette, label_size),
-                    .function7(out1, colour_palette))
+    plots1 <- .function2(out1)
+
+    plots2 <- .function6(out1, colour_palette, label_size)
+
+    plots3 <- .function7(out1)
+
+    # plots <- switch(as.character(version),
+    #                 "1" = .function2(out1),
+    #                 "2" = .function6(out1, colour_palette, label_size),
+    #                 .function7(out1, colour_palette))
   }
 
   # save plots
-  big_plot <- patchwork::wrap_plots(plots, ncol = 2) # choose number of columns
+  big_plot1 <- patchwork::wrap_plots(plots1, ncol = 2) # choose number of columns
+  big_plot2 <- patchwork::wrap_plots(plots2, ncol = 2) # choose number of columns
+  big_plot3 <- patchwork::wrap_plots(plots3, ncol = 2) # choose number of columns
 
-  pdf(file.path(output_location, "chlorofluoro_plot_1.pdf"), width= width, height = height)
-  print(big_plot)
-
+  pdf(file.path(output_location, "chlorofluoro_plot_1A.pdf"), width= width, height = height)
+  print(big_plot1)
   dev.off()
+
+  pdf(file.path(output_location, "chlorofluoro_plot_1B.pdf"), width= width, height = height)
+  print(big_plot2)
+  dev.off()
+
+
+  pdf(file.path(output_location, "chlorofluoro_plot_1C.pdf"), width= width, height = height)
+  print(big_plot3)
+  dev.off()
+
 
   message("Plots saved to ", file.path(output_location, "chlorofluoro_plot_1.pdf"))
   message("Returned data")

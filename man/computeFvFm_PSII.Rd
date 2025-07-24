@@ -12,7 +12,6 @@ computeFvFm_PSII(
   copynumber,
   output_location,
   colour_palette = NULL,
-  version = 1,
   width = 20,
   height = 25,
   label_size = 5
@@ -35,16 +34,6 @@ computeFvFm_PSII(
 \item{colour_palette}{character; colour palette for ggplot. Default is Null,
 when used plots use packages default green palette (n=19).}
 
-\item{version}{numeric; version of plot, choose from 1, 2, and 3. Each returns
-a slightly different way to plot the data.
-Version 1 = coloured based on selection result, and linetype represents
-copy number.
-Version 2 = coloured based on copy number, and linetype represents
-selection result with each plant labeled within the plot
-
-Version 3 = coloured based on copy number, and linetype/shape represents
-selection result with each line labeled via the legend.}
-
 \item{width}{numeric; pdf width size. deafult is 20.}
 
 \item{height}{numeric;pdf height size. deafult is 21.}
@@ -55,6 +44,14 @@ selection result with each line labeled via the legend.}
 Returns a list of dataframes, where each plates has a dataframe for
 FvFm and PSII. Saves an excel file containing all data and a plot for
 FvFm and PSII.
+
+Version 1 = coloured based on selection result, and linetype represents
+copy number.
+Version 2 = coloured based on copy number, and linetype represents
+selection result with each plant labeled within the plot
+
+Version 3 = coloured based on copy number, and linetype/shape represents
+selection result with each line labeled via the legend.
 }
 \description{
 Organises the raw data output for 1 or more plates and plots the
