@@ -23,6 +23,25 @@ plotTheme <- ggplot2::theme(
   plot.margin = ggplot2::unit(c(0.5, 0.5, 0.5, 0.5), "cm"),
   legend.box = "horizontal")
 
+plotTheme_v2 <- ggplot2::theme(
+  strip.background = ggplot2::element_blank(),
+  strip.placement = "outside",
+  panel.grid = ggplot2::element_blank(),
+  axis.text.x = ggplot2::element_text(color="black", size = 16, margin = ggplot2::margin(t = 2, b = 4)),
+  axis.text.y = ggplot2::element_text(color="black", size = 16, margin = ggplot2::margin(r = 5)) ,
+  panel.grid.major.x = ggplot2::element_line( size=.1, color="grey", linetype = 2 ),
+  panel.grid.major.y = ggplot2::element_line( size=.1, color="grey", linetype = 2 ),
+  legend.position = "right",
+  legend.box.margin=ggplot2::margin(20,20,20,20),
+  legend.text = ggplot2::element_text(size=12, margin = ggplot2::margin(7,7,7,7)),
+  legend.title = ggplot2::element_text(size = 13, face = "bold"),
+  axis.title.y = ggplot2::element_text(margin = ggplot2::margin(r = 10), size = 16, face = "bold"),
+  axis.title.x = ggplot2::element_text(margin = ggplot2::margin(t = 10), size = 16, face = "bold"),
+  strip.text.x = ggplot2::element_text(size = 16,face="bold" , margin = ggplot2::margin(b = 5),  hjust = 0.5),
+  strip.text.y = ggplot2::element_text(size = 16,face="bold" , margin = ggplot2::margin(l = 5),  vjust = 0.4, hjust = 0.2),
+  plot.margin = ggplot2::unit(c(0.5, 0.5, 0.5, 0.5), "cm"),
+  legend.box = "horizontal")
+
 # add to these if need more!!!
 custom_greens <- c("#C4E6C3FF",
                    "#96D2A4FF",
@@ -248,7 +267,7 @@ custom_reds   <- c("#8B0000",
 
 
 
-.function6 <- function(list_of_dfs, colour_palette){
+.function6 <- function(list_of_dfs, colour_palette, label_size){
   store_plots <- list()
 
   for (i in 1:length(list_of_dfs)) {
@@ -266,7 +285,6 @@ custom_reds   <- c("#8B0000",
       len <- length(unique(plate_fvfm$Plant_ID))
       colour_palette <- custom_greens[3:len]
     }
-
 
 
     plate_fvfm_summary <- plate_fvfm %>%
@@ -298,35 +316,40 @@ custom_reds   <- c("#8B0000",
 
 
     p1 <- ggplot2::ggplot(plate_fvfm_summary,
-                          aes(x = Time, y = FvFm_mean,group = Plant_ID,
+                          ggplot2::aes(x = Time, y = FvFm_mean,group = Plant_ID,
                                    color = BAR_copy,linetype = Selection)) +
-      ggplot2::geom_line(size =1.5) +
+      ggplot2::geom_line(linewidth = 1) +
       ggplot2::geom_point(size =3) +
       ggplot2::scale_color_manual(values = colour_palette)+
       ggplot2::labs(x = "Time (min)", y = "Fv/Fm", title = paste0(val, " FvFm"),
                     linetype="Selection screen", colour="Copy No.") +
       ggplot2::theme_bw() +
-      plotTheme+
-      theme(legend.box = "vertical")+
+      plotTheme_v2+
+      ggplot2::scale_linetype_manual(values = c("pass" = "solid", "fail" = "dashed"))+
+      ggplot2::theme(legend.box = "vertical", legend.key.width = grid::unit(1, "cm"))+
       ggrepel::geom_text_repel(data = plate_fvfm_labels,
-                               aes(label = Plant_ID),size = 4,
+                               ggplot2::aes(label = Plant_ID),size = label_size,
                                show.legend = FALSE, nudge_x = 7)
 
-    p2 <- ggplot2::ggplot(plate_PSII_summary, aes(x = Time, y = PSII_mean,
+
+
+
+    p2 <- ggplot2::ggplot(plate_PSII_summary, ggplot2::aes(x = Time, y = PSII_mean,
                                                   group = Plant_ID,
                                                   color = BAR_copy,
                                                   linetype = Selection)) +
-      ggplot2::geom_line(size =1.5) +
+      ggplot2::geom_line(size =1) +
       ggplot2::geom_point(size =3) +
       ggplot2::scale_color_manual(values = colour_palette)+
       ggrepel::geom_text_repel(data = plate_PSII_labels,
-                               aes(label = Plant_ID),size = 4,
+                               ggplot2::aes(label = Plant_ID),size = label_size,
                                show.legend = FALSE, nudge_x = 7)+
       ggplot2::labs(x = "Time (min)", y = "PSII", title = paste0(val, " PSII"),
                     linetype="Selection screen", colour="Copy No.") +
+      ggplot2::scale_linetype_manual(values = c("pass" = "solid", "fail" = "dashed"))+
       ggplot2::theme_bw() +
       plotTheme+
-      theme(legend.box = "vertical")
+      ggplot2::theme(legend.box = "vertical", legend.key.width = grid::unit(1, "cm"))
 
     store_plots <- append(store_plots, list(p1, p2))
   }
@@ -436,9 +459,7 @@ custom_reds   <- c("#8B0000",
     barcopy_legend_df <- plate_fvfm_summary %>%
       distinct(BAR_copy)
 
-    basta_legend_df <- plate_fvfm_summary %>%
-      distinct(Selection)
-    basta_legend_df <- basta_legend_df[match( names(linetype_values), basta_legend_df$Selection), ]
+    basta_legend_df <- data.frame(Selection = factor(c("pass", "fail"), levels = c("pass", "fail")))
 
     p1 <- ggplot2::ggplot(plate_fvfm_summary,
                           ggplot2::aes(x = Time, y = FvFm_mean,
@@ -460,14 +481,14 @@ custom_reds   <- c("#8B0000",
                           shape = NA, size = NA, inherit.aes = FALSE, show.legend = TRUE) +
 
       ggplot2::scale_fill_manual(name = "Copy No.", values = colour_palette,
-                                 guide = guide_legend(override.aes = list(shape = 21, size = 4))) +
+                                 guide = ggplot2::guide_legend(override.aes = list(shape = 21, size = 4))) +
       ggplot2::geom_point(data = basta_legend_df,
                           ggplot2::aes(x = Inf, y = Inf, alpha = Selection),
                           shape = NA, size = NA, inherit.aes = FALSE, show.legend = TRUE) +
 
       ggplot2::scale_alpha_manual(name = "Selection screen",
                                   values = c("pass" = 1, "fail" = 1),  # different alpha just to trick legend
-                                  guide = guide_legend(override.aes = list(
+                                  guide = ggplot2::guide_legend(override.aes = list(
                                     shape = shape_values,
                                     linetype = linetype_values,
                                     color = "black",
@@ -479,9 +500,9 @@ custom_reds   <- c("#8B0000",
                       linetype = ggplot2::guide_legend(title = "Plant_ID",ncol = 2, order = 1),
                       shape = ggplot2::guide_legend(title = "Plant_ID", ncol = 2, order = 1))+
       ggplot2::labs(x = "Time (min)", y = "Fv/Fm",title = paste0(val, " FvFm"))+
-    theme_bw()+
+      ggplot2::theme_bw()+
       plotTheme+
-      theme(legend.box = "verticle")
+      ggplot2::theme(legend.box = "verticle")
 
 
 

@@ -29,11 +29,11 @@
 #'Version 3 = coloured based on copy number, and linetype/shape represents
 #'selection result with each line labeled via the legend.
 #'
-#'Version 4 = Grouping plants based on copy number.
 #'
 #'@param colour_palette character; colour palette for ggplot. Default is Null,
 #'when used plots use packages default green palette (n=19).
 #'
+#'@param label_size numeric; size of text label annotations for plant IDs.
 #'
 #' @return Returns a list of dataframes, where each plates has a dataframe for
 #' FvFm and PSII. Saves an excel file containing all data and a plot for
@@ -50,7 +50,7 @@
 #' output_location <-  tempdir()
 #'
 #' step_one <- computeFvFm_PSII(CF_demodata,plate_names,layout,smartsheet ,
-#' copynumber,output_location, version =4 )
+#' copynumber,output_location, version =3)
 #'
 #' @export
 #' @import openxlsx
@@ -60,6 +60,7 @@
 #' @import ggrepel
 #' @import viridis
 #' @import utils
+#' @import grid
 computeFvFm_PSII <- function(data,
                                 plate_names,
                                 layout,
@@ -69,7 +70,8 @@ computeFvFm_PSII <- function(data,
                              colour_palette = NULL,
                              version = 1,
                                 width= 20,
-                                height = 25){
+                                height = 25,
+                             label_size = 5){
 
   if(is.data.frame(data)){
     out1 <- .function1(data,
@@ -80,8 +82,11 @@ computeFvFm_PSII <- function(data,
 
     # save data
     excel <- list(FvFm = out1$FvFm,PSII = out1$PSII)
-    openxlsx::write.xlsx(excel, file = file.path(output_location, "chlorofluoro_dataset_1.xlsx"), rowNames=F)
-    message("Data saved to ", file.path(output_location, "chlorofluoro_dataset_1.xlsx"))
+    openxlsx::write.xlsx(excel, file = file.path(output_location,
+                                                 "chlorofluoro_dataset_1.xlsx"),
+                         rowNames=F)
+    message("Data saved to ", file.path(output_location,
+                                        "chlorofluoro_dataset_1.xlsx"))
 
     plots <- switch(as.character(version),
                     "1" = .function2(out1),
@@ -104,12 +109,13 @@ computeFvFm_PSII <- function(data,
     }
     # save data
     .function3(out1, file.path(output_location, "chlorofluoro_dataset_1.xlsx"))
-    message("Data saved to ", file.path(output_location, "chlorofluoro_dataset_1.xlsx"))
+    message("Data saved to ", file.path(output_location,
+                                        "chlorofluoro_dataset_1.xlsx"))
 
     # plot!
     plots <- switch(as.character(version),
                     "1" = .function2(out1),
-                    "2" = .function6(out1, colour_palette),
+                    "2" = .function6(out1, colour_palette, label_size),
                     .function7(out1, colour_palette))
   }
 

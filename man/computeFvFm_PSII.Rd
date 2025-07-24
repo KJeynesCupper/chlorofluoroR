@@ -14,7 +14,8 @@ computeFvFm_PSII(
   colour_palette = NULL,
   version = 1,
   width = 20,
-  height = 25
+  height = 25,
+  label_size = 5
 )
 }
 \arguments{
@@ -42,13 +43,13 @@ Version 2 = coloured based on copy number, and linetype represents
 selection result with each plant labeled within the plot
 
 Version 3 = coloured based on copy number, and linetype/shape represents
-selection result with each line labeled via the legend.
-
-Version 4 = Grouping plants based on copy number.}
+selection result with each line labeled via the legend.}
 
 \item{width}{numeric; pdf width size. deafult is 20.}
 
 \item{height}{numeric;pdf height size. deafult is 21.}
+
+\item{label_size}{numeric; size of text label annotations for plant IDs.}
 }
 \value{
 Returns a list of dataframes, where each plates has a dataframe for
@@ -75,6 +76,6 @@ smartsheet <- selection_results
 output_location <-  tempdir()
 
 step_one <- computeFvFm_PSII(CF_demodata,plate_names,layout,smartsheet ,
-copynumber,output_location, version =4 )
+copynumber,output_location, version =3)
 
 }
