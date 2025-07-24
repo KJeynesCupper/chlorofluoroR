@@ -192,7 +192,7 @@
 <p><br></p>
 </div>
 <div class="section level2">
-<h2 id="id_2-subset-for-specific-combinations">2. Subset for specific combinations<a class="anchor" aria-label="anchor" href="#id_2-subset-for-specific-combinations"></a>
+<h2 id="id_3-subset-for-specific-combinations">3. Subset for specific combinations<a class="anchor" aria-label="anchor" href="#id_3-subset-for-specific-combinations"></a>
 </h2>
 <p>We want to use this data to help us select for lines to carry to T2. So, here we will filter for these desired traits. For example, we will select for those with a copy number value of 4 and BASTA positive (ie. resistant).</p>
 <div class="sourceCode" id="cb6"><pre class="downlit sourceCode r">
@@ -202,12 +202,12 @@
 <p>This outputs a plot and excel document in the same way as compute_chlorofluor() function. See output as files “chlorofluoro_plot_2.pdf” and “chlorofluoro_dataset_2.xlsx” <br></p>
 </div>
 <div class="section level2">
-<h2 id="id_3-summarise-the-fvfm-and-psii-values-for-each-plant-line">3. Summarise the FvFm and PSII values for each plant line.<a class="anchor" aria-label="anchor" href="#id_3-summarise-the-fvfm-and-psii-values-for-each-plant-line"></a>
+<h2 id="id_4-summarise-the-fvfm-and-psii-values-for-each-plant-line">4. Summarise the FvFm and PSII values for each plant line.<a class="anchor" aria-label="anchor" href="#id_4-summarise-the-fvfm-and-psii-values-for-each-plant-line"></a>
 </h2>
-<p>Instead of looking at the distribution of the FvFm or PSII over multiple light pulses across time, we can calculate a mean. Here we plot the mean for these variables as a bar plot with error bars representing SD. As before, the colour is determined by the BASTA selection result. Output is also saved as an excel document (one sheet per plate and variable). See output as files “chlorofluoro_plot_3.pdf” and “chlorofluoro_dataset_3.xlsx”</p>
+<p>Instead of looking at the distribution of the FvFm or PSII over multiple light pulses across time, we can calculate a mean. Here we plot the mean for these variables as a bar plot with error bars representing SD. Here, the colour is determined by the copy number and the bar outline is determined by the BASTA selection screen. Output is also saved as an excel document (one sheet per plate and variable). See output as files “chlorofluoro_plot_3.pdf” and “chlorofluoro_dataset_3.xlsx”</p>
 <div class="sourceCode" id="cb7"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/utils/data.html" class="external-link">data</a></span><span class="op">(</span><span class="st">"step_one"</span><span class="op">)</span></span>
-<span><span class="va">step_three</span> <span class="op">&lt;-</span> <span class="fu"><a href="reference/summarise_FvFmPSII.html">summarise_FvFmPSII</a></span><span class="op">(</span><span class="va">step_one</span>, <span class="va">output_location</span><span class="op">)</span></span></code></pre></div>
+<span><span class="va">step_three</span> <span class="op">&lt;-</span> <span class="fu"><a href="reference/summarise_FvFmPSII.html">summarise_FvFmPSII</a></span><span class="op">(</span><span class="va">step_one</span>, <span class="va">copynumber</span>, <span class="va">output_location</span><span class="op">)</span></span></code></pre></div>
 <p><br></p>
 </div>
 </div>
